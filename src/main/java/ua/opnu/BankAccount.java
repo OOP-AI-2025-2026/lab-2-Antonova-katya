@@ -5,23 +5,49 @@ public class BankAccount {
     double balance;
     double transactionFee;
 
-    void deposit(double amount) {
-        // TODO: modify method body
-        balance = balance + amount;
-    }
+        BankAccount() {
+            this.name = "";
+            this.balance = 0.0;
+            this.transactionFee = 0.0;
+        }
 
-    double getBalance() {
-        return this.balance;
-    }
+        void deposit(double amount) {
+            if (amount > 0) {
+                balance = balance + amount;
+            }
+        }
 
-    boolean withdraw(double amount) {
-        // TODO: modify method body
-        balance = balance - amount;
-        return true;
-    }
+        double getBalance() {
+            return this.balance;
+        }
 
-    boolean transfer(BankAccount receiver, double amount) {
-        // TODO: modify method body
-        return false;
+        boolean withdraw(double amount) {
+            if (amount <= 0) {
+                return false;
+            }
+            double totalDeduction = amount + transactionFee;
+            if (balance >= totalDeduction) {
+                balance = balance - totalDeduction;
+                return true;
+            }
+                return false;
+        }
+
+        boolean transfer(BankAccount receiver, double amount) {
+            if (amount <= 0) return false;
+            double totalDeduction = amount + transactionFee;
+            if (balance >= totalDeduction) {
+                balance = balance - totalDeduction;
+                receiver.balance = receiver.balance + amount;
+                return true;
+            }
+                return false;
+        }
+
+        void setTransactionFee(double fee) {
+            if (fee >= 0) {
+                transactionFee = fee;
+            }
+        }
+
     }
-}
